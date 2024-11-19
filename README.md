@@ -1,7 +1,7 @@
 # NCAA-men-swimming
 
 Detailed Description
-This project showcases my skills and interests by analyzing NCAA Men's Swimming data. I collected data on the top 16 times in the 100-yard freestyle event at the NCAA Men’s Championships. Currently, the dataset includes years from 2013 to 2024 (excluding 2020 due to COVID). In the future, I plan to expand the dataset to include additional years to improve the reliability of the analysis.
+This project showcases my skills and interests by analyzing NCAA Men's Swimming data. I collected data on the top 16 times in the 100-yard freestyle event at the NCAA Men’s Championships. Currently, the dataset includes years from 2013 to 2024 (excluding 2020 due to COVID). In the future, I plan to expand the dataset to include additional years to improve the reliability of the analysis. The spreadsheet has been uploaded in this repository under the name 'top16_100free.xlsx'.
 
 #### The dataset consists of a single entity with the following schema:
 ```
