@@ -1,0 +1,76 @@
+Author: Tarik Gusic
+Project 
+Queries used:
+Query for fastest-slowest difference:
+
+with Slowest_time_year as (
+select year, printf('%.2f', max(Time)) as slowest_time
+from swims
+group by Year
+),
+Fastest_time_year as (
+select year, printf('%.2f', min(Time)) as fastest_time
+from swims
+group by year
+)
+select 
+st.year,
+ft.fastest_time,
+st.slowest_time,
+printf('%.2f',round(st.slowest_time - ft.fastest_time,2)) as difference,
+round((st.slowest_time - ft.fastest_time)/fastest_time * 100,2) as percentage_diff
+from slowest_time_year st
+join fastest_time_year ft on ft.year = st.year
+order by difference desc;
+
+Query for difference between all the times and the fastest:
+with Fastest_per_year as(
+select Year, printf('%.2f',min(Time)) as Fastest_Time
+from swims
+group by Year
+)
+select 
+s.Place,
+s.Year, 
+printf('%.2f',s.Time) as Time, 
+printf('%.2f',(s.Time - f.Fastest_Time)) as Time_difference,
+((s.time - f.Fastest_Time) / f.Fastest_Time) * 100 as Percentage_difference
+from swims s
+join fastest_per_year f on s.Year = f.Year;
+
+
+
+
+
+
+
+Query for counting appearances of each school:
+select 
+count(Place) as Appearances,
+School
+from swims
+group by School
+order by Appearances desc;
+
+Query for showing the podium places (1st, 2nd, 3rd) won by each school:
+
+with Place_Counts as (
+select 
+School,
+SUM(case when Place = 1 then 1 else 0 end) as First_Place_Count,
+SUM(case when Place = 2 then 1 else 0 end) as Second_Place_Count,
+SUM(case when Place = 3 then 1 else 0 end) as Third_Place_Count
+from swims
+group by School
+)
+select 
+School,
+First_Place_Count,
+Second_Place_Count,
+Third_Place_Count
+from Place_Counts
+where First_Place_Count > 0 or Second_Place_Count > 0 or Third_Place_Count > 0
+order by 
+First_Place_Count desc,
+Second_Place_Count desc,
+Third_Place_Count desc;
