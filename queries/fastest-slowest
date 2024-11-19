@@ -1,0 +1,19 @@
+with Slowest_time_year as (
+    select year, printf('%.2f', max(Time)) as slowest_time
+    from swims
+    group by Year
+),
+Fastest_time_year as (
+    select year, printf('%.2f', min(Time)) as fastest_time
+    from swims
+    group by year
+)
+select 
+    st.year,S
+    ft.fastest_time,
+    st.slowest_time,
+    printf('%.2f',round(st.slowest_time - ft.fastest_time,2)) as difference,
+    round((st.slowest_time - ft.fastest_time)/fastest_time * 100,2) as percentage_diff
+from slowest_time_year st
+join fastest_time_year ft on ft.year = st.year
+order by difference desc

@@ -1,0 +1,14 @@
+with Fastest_per_year as(
+    select Year, printf('%.2f',min(Time)) as Fastest_Time
+    from swims
+    group by Year
+)
+
+select 
+    s.Place,
+    s.Year, 
+    printf('%.2f',s.Time) as Time, 
+    printf('%.2f',(s.Time - f.Fastest_Time)) as Time_difference,
+    ((s.time - f.Fastest_Time) / f.Fastest_Time) * 100 as Percentage_difference
+from swims s
+join fastest_per_year f on s.Year = f.Year;

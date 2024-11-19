@@ -1,0 +1,6 @@
+select 
+    count(Place) as Appearances,
+    School
+from swims
+group by School
+order by Appearances desc

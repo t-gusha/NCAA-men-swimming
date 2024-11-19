@@ -1,0 +1,20 @@
+with Place_Counts as (
+    select 
+        School,
+        SUM(case when Place = 1 then 1 else 0 end) as First_Place_Count,
+        SUM(case when Place = 2 then 1 else 0 end) as Second_Place_Count,
+        SUM(case when Place = 3 then 1 else 0 end) as Third_Place_Count
+    from swims
+    group by School
+)
+select 
+    School,
+    First_Place_Count,
+    Second_Place_Count,
+    Third_Place_Count
+from Place_Counts
+where First_Place_Count > 0 or Second_Place_Count > 0 or Third_Place_Count > 0
+order by 
+    First_Place_Count desc,
+    Second_Place_Count desc,
+    Third_Place_Count desc;
